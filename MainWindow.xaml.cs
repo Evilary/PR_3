@@ -42,6 +42,9 @@ namespace Chess_Chernyshkov
             Pawns.Add(new Classes.Pawn(7, 6, true));
 
 
+            Pawns.Add(new Classes.Pawn(3, 0, false));
+
+
             CreateFigure();
 
         }
