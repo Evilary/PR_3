@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
@@ -19,6 +18,9 @@ namespace Chess_Chernyshkov.Classes
         public Grid Figure { get; set; }
         public Pawn(int X, int Y, bool Black)
         {
+            this.X = X; 
+            this.Y = Y;
+            this.Black = Black;
         }
 
         public void SelectFigure(object sender, MouseButtonEventArgs e)
@@ -44,17 +46,36 @@ namespace Chess_Chernyshkov.Classes
                 if (this.Select)
                 {
                     if (this.Black)
-                        this.Figure.Background = new ImageBrush(new BitmapImage(new Uri(@"pack://application:,,./Images/Pawn (black).png")));
+                        this.Figure.Background = new ImageBrush(new BitmapImage(new Uri(@"pack://application:,,,/Images/Pawn (black).png")));
                     else
-                        this.Figure.Background = new ImageBrush(new BitmapImage(new Uri(@"pack://application:,,./Images/Pawn.png")));
+                        this.Figure.Background = new ImageBrush(new BitmapImage(new Uri(@"pack://application:,,,/Images/Pawn.png")));
                     this.Select = false;
                 }
                 else
                 {
-                    this.Figure.Background = new ImageBrush(new BitmapImage(new Uri(@"pack://application:,,./Images/Pawn (select).png")));
+                    this.Figure.Background = new ImageBrush(new BitmapImage(new Uri(@"pack://application:,,,/Images/Pawn (select).png")));
                     this.Select = true;
                 }
             }
+        }
+
+        public void Transform(int X, int Y)
+        {
+            if (X != this.X)
+            {
+                SelectFigure(null, null);
+                return;
+            }
+
+            if (!Black && ((this.Y == 1 && this.Y + 2 == Y) || this.Y + 1 == Y) ||
+            Black && ((this.Y == 6 && this.Y - 2 == Y) || this.Y - 1 == Y))
+            {
+                Grid.SetColumn(this.Figure, X);
+                Grid.SetRow(this.Figure, Y);
+                this.X = X;
+                this.Y = Y;
+            }
+            SelectFigure(null, null);
         }
 
 
